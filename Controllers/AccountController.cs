@@ -38,5 +38,83 @@ namespace Toverland_API_V2.Controllers
 
             return Ok(account);
         }
+
+        [HttpPost]
+        public ActionResult<Account> Create([FromBody] Account account)
+        {
+            if (account == null)
+            {
+                return BadRequest("Account object is null");
+            }
+
+            try
+            {
+                _context.Account.Add(account);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+            return CreatedAtAction(nameof(Get), new { id = account.Id }, account);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Edit(int id, [FromBody] Account account)
+        {
+            if (account == null)
+            {
+                return BadRequest("Account object is null");
+            }
+
+            var existingAccount = _context.Account.Find(id);
+            if (existingAccount == null)
+            {
+                return NotFound();
+            }
+
+            existingAccount.Role = account.Role;
+            existingAccount.UpdatedAt = DateTime.UtcNow;
+
+            try
+            {
+                _context.Account.Update(existingAccount);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var account = _context.Account.Find(id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            
+            if (account.Role == AccountRole.MANAGER)
+            {
+                return BadRequest("Cannot delete a manager account");
+            }
+
+            try
+            {
+                _context.Account.Remove(account);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+            return NoContent();
+        }
     }
 }
