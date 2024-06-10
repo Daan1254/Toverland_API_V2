@@ -1,0 +1,6 @@
+@Toverland_API_V2_HostAddress = http://localhost:5114
+
+GET {{Toverland_API_V2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
