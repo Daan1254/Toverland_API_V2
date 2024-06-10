@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Toverland_API.Data;
 using Toverland_API.Models;
+using Toverland_API_V2.Dtos.Account;
+using Toverland_API_V2.Mappers;
 
 namespace Toverland_API_V2.Controllers
 {
@@ -15,11 +17,13 @@ namespace Toverland_API_V2.Controllers
         private readonly ApplicationDBContext _context = context;
 
         [HttpGet]
-        public ActionResult<List<Account>> GetAll() {
-            List<Account> accounts;
+        public ActionResult<List<AccountDto>> GetAll() {
+            List<AccountDto> accounts;
             try
             {
-                accounts = _context.Account.ToList();
+                accounts = _context.Account
+                .Select(s => s.ToAccountDto())
+                .ToList();
             }
             catch (Exception ex)
             {
@@ -29,14 +33,14 @@ namespace Toverland_API_V2.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Account> Get([FromRoute] int id) {
+        public ActionResult<AccountDto> Get([FromRoute] int id) {
             Account? account = _context.Account.Find(id);
 
             if (account == null) {
                 return NotFound();
             }
 
-            return Ok(account);
+            return Ok(account.ToAccountDto());
         }
 
         [HttpPost]
@@ -98,7 +102,7 @@ namespace Toverland_API_V2.Controllers
             {
                 return NotFound();
             }
-            
+
             if (account.Role == AccountRole.MANAGER)
             {
                 return BadRequest("Cannot delete a manager account");
