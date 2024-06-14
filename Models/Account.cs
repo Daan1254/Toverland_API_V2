@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 
-public enum AccountRole {
+public enum UserRole {
     GUEST,
     MANAGER,
     EMPLOYEE
@@ -12,36 +13,12 @@ public enum AccountRole {
 
 namespace Toverland_API.Models
 {
-    public class Account
+    public class Account : IdentityUser
     {
-        public int Id { get; set; }
 
-        public string FirstName { get; private set; } = string.Empty;
-
-        public string LastName { get; private set; } = string.Empty;
-
-        public string Email { get; private set; } = string.Empty;
-
-        public bool OneTimePassword { get; set; } = false;
-
-        public string Password { get; set; } = string.Empty;
-
-        public AccountRole Role { get; set; } = AccountRole.GUEST;
-
-        public DateTime UpdatedAt { get; set; }
-
+    
         
-
-        public Account(int Id, string FirstName, string LastName, string Email)
-        {
-            this.Id = Id;
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.Email = Email;
-        }
-
-
-        private void SetRole(AccountRole role) {
+        private void SetRole(UserRole role) {
 
         }
 
