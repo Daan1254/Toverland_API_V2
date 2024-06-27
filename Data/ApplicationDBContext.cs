@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Toverland_API.Models;
 
 namespace Toverland_API.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<Account>
     {
         public ApplicationDBContext(DbContextOptions dbContextOptions)
         : base(dbContextOptions)
@@ -21,5 +22,13 @@ namespace Toverland_API.Data
         // public DbSet<MatrixSign> MatrixSign { get; set; }
 
 
+        override protected void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Account>().ToTable("Account");
+            // modelBuilder.Entity<Facility>().ToTable("Facility");
+            // modelBuilder.Entity<Location>().ToTable("Location");
+            // modelBuilder.Entity<MatrixSign>().ToTable("MatrixSign");
+        }
     }
 }

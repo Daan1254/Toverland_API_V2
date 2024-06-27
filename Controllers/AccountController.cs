@@ -21,9 +21,11 @@ namespace Toverland_API_V2.Controllers
             List<AccountDto> accounts;
             try
             {
+
                 accounts = _context.Account
-                .Select(s => s.ToAccountDto())
-                .ToList();
+                    .Select(s => s.ToAccountDto())
+                    .ToList();
+                
             }
             catch (Exception ex)
             {
@@ -78,8 +80,8 @@ namespace Toverland_API_V2.Controllers
                 return NotFound();
             }
 
-            existingAccount.Role = account.Role;
-            existingAccount.UpdatedAt = DateTime.UtcNow;
+            // existingAccount.Role = account.Role;
+            // existingAccount.UpdatedAt = DateTime.UtcNow;
 
             try
             {
@@ -103,10 +105,10 @@ namespace Toverland_API_V2.Controllers
                 return NotFound();
             }
 
-            if (account.Role == AccountRole.MANAGER)
-            {
-                return BadRequest("Cannot delete a manager account");
-            }
+            // if (account.Role == AccountRole.MANAGER)
+            // {
+            //     return BadRequest("Cannot delete a manager account");
+            // }
 
             try
             {

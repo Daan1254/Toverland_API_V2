@@ -10,17 +10,14 @@ namespace Toverland_API_V2.Mappers
     public static class AccountMappers
     {
     public static AccountDto ToAccountDto(this Account account)
+    {    
+        return new AccountDto
         {
-            return new AccountDto
-            {
-                Id = account.Id,
-                FirstName = account.FirstName,
-                LastName = account.LastName,
-                Email = account.Email,
-                OneTimePassword = account.OneTimePassword,
-                Role = account.Role
-            };
-        }
+            UserName = account.UserName ?? "No Username Found",
+            Email = account.Email ?? "No Email Found",
+            PhoneNumber = account.PhoneNumber ?? "No phone number",
+        };
+    }
     }
 
 }

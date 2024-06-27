@@ -27,7 +27,7 @@ namespace Toverland_API.Models
 
         public CordinalDirection Direction { get; set; }
 
-        public int? MatrixSignId {get; set;}
+        public int? MatrixSignId { get; set; }
 
         public MatrixSign? MatrixSign { get; set; }
 
