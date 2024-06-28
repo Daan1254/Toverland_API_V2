@@ -9,6 +9,8 @@ public enum State
 
 public class FacilityDto
 {
+
+    public int Id { get; set; }
     public string Title { get; set; }
     public int WaitTime { get; set; }
 
