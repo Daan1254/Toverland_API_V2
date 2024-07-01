@@ -1,9 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+namespace Toverland_API_V2.Dtos.Facility;
 
-public enum FacilityType {
+public enum State
+{
+    Open,
+    Closed,
+    Maintenance
+}
+
+public enum FacilityType
+{
     RIDE,
     FOOD_DRINKS,
     RESTROOM,
@@ -13,39 +18,22 @@ public enum FacilityType {
     SHOP
 }
 
-namespace Toverland_API.Models
+public class Facility
 {
-    public class Facility
-    {
-        private int Id { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+    public int Id { get; set; }
+    public string Title { get; set; }
 
-        public int? WaitTime { get; set; }
+    public string SubTitle { get; set; }
+    
+    public string Description { get; set; }
+    
+    public string ImageUrl { get; set; }
 
-        public Location Location { get; private set; }
+    public string MapUrl { get; set; }
+    public int WaitTime { get; set; }
+    
+    public FacilityType Type { get; set; }
 
-        public CordinalDirection Direction { get; set; }
-
-        public int? MatrixSignId { get; set; }
-
-        public MatrixSign? MatrixSign { get; set; }
-
-        public FacilityType Type { get; set; } = FacilityType.RIDE;
-
-
-        public Facility(int Id, Location location) 
-        {
-            this.Id = Id;
-            this.Location = location;
-        }
-
-        public void SetWaitTime(int WaitTime) {
-
-        }
-
-        public void Move(Location location) {
-
-        }
-    }
+    public State state { get; set; }
 }
